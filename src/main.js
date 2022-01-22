@@ -3,6 +3,8 @@
 import imgsrc from './assets/img/WechatIMG18.png';
 
 import axios from 'axios';
+
+import './demo.js';
 import './style/index.css';
 
 console.log(axios)
@@ -14,9 +16,9 @@ document.body.appendChild(img);
 document.body.appendChild(div);
 console.log('hello world');
 async function demo() {
-  const result = await axios.get('www.baidu.com');
-  console.log({
-    result
-  })
+  // const result = await axios.get('https://www.baidu.com/');
+  // console.log({
+  //   result
+  // })
 }
 demo();

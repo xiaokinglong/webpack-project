@@ -4,12 +4,15 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // 压缩, 抽�
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
-  entry: "./src/main.js", // 入口文件
+  entry: {
+    index: "./src/main.js",
+  }, // 入口文件
   output: {
-    path: path.resolve(__dirname, "./dist"),
+    filename: "js/[name].bundle.js",
+    // path: path.resolve(__dirname, "./dist"),
     clean: true,
   },
-  devtool: "inline-source-map",
+  devtool: "source-map",
   mode: "production",
   devServer: {
     // 开启本地服务
@@ -50,30 +53,36 @@ module.exports = {
       {
         // 配置babel
         test: /\.js$/,
+        exclude: /node_modules/, // 不处理该文件夹下的js文件
         use: {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-env"],
             plugins: [
               // 为了解决 Uncaught ReferenceError: regeneratorRuntime is not defined 的错误
-              [
-                "@babel/plugin-transform-runtime",
-                {
-                  "absoluteRuntime": false,
-                  "corejs": false,
-                  "helpers": true,
-                  "regenerator": true,
-                  "version": "7.0.0-beta.0"
-                }
-              ]
-            ]
+              ["@babel/plugin-transform-runtime"],
+            ],
           },
-          
         },
       },
     ],
   },
-  optimization: { minimizer: [new CssMinimizerPlugin()] },
+  optimization: {
+    splitChunks: {
+      // splitChunks
+      cacheGroups: {
+        // 缓存
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all",
+        },
+      },
+
+      chunks: "all", // 分割代码
+    },
+    minimizer: [new CssMinimizerPlugin()],
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
