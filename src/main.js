@@ -1,24 +1,4 @@
+import { createApp  } from 'vue';
+import App from './App.vue';
 
-
-import imgsrc from './assets/img/WechatIMG18.png';
-
-import axios from 'axios';
-
-import './demo.js';
-import './style/index.css';
-
-console.log(axios)
-const img = document.createElement('img');
-let div = document.createElement('img');
-div.innerText = '=> ha';
-img.src = imgsrc;
-document.body.appendChild(img);
-document.body.appendChild(div);
-console.log('hello world');
-async function demo() {
-  // const result = await axios.get('https://www.baidu.com/');
-  // console.log({
-  //   result
-  // })
-}
-demo();
+createApp(App).mount("#app")

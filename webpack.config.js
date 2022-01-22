@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // 压缩, 抽离css
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = (env) => {
   console.log(env)
@@ -25,6 +26,14 @@ module.exports = (env) => {
     module: {
       // 配置资源文件
       rules: [
+        {
+          test: /\.vue$/,
+          use: [
+            {
+              loader: 'vue-loader'
+            }
+          ]
+        },
         {
           // font
           test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -96,6 +105,7 @@ module.exports = (env) => {
       new MiniCssExtractPlugin({
         filename: "styles/[contenthash].css",
       }),
+      new VueLoaderPlugin(),
     ],
   };
 };
