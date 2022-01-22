@@ -13,6 +13,7 @@ module.exports = (env) => {
       filename: "js/[name].bundle.js",
       // path: path.resolve(__dirname, "./dist"),
       clean: true,
+      pathinfo: false, // 不输入打包的信息
     },
     devtool: "source-map",
     mode: env.production ? 'production' : 'development',
@@ -51,7 +52,20 @@ module.exports = (env) => {
         /** 使用loader */
         {
           test: /\.css$/,
-          use: [MiniCssExtractPlugin.loader, "css-loader"],
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader, 
+            },
+            {
+              loader: "css-loader",
+              options: {
+                importLoaders: 1,
+              }
+            },
+            {
+              loader: "postcss-loader"
+            }
+          ],
         },
 
         {
