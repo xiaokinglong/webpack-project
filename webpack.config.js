@@ -21,8 +21,7 @@ module.exports = {
       {
         // font
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        // use: 'file-loader'
-        type: 'asset/resource',
+        type: "asset/resource",
       },
       {
         test: /\.jpg/,
@@ -46,6 +45,31 @@ module.exports = {
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+
+      {
+        // 配置babel
+        test: /\.js$/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+            plugins: [
+              // 为了解决 Uncaught ReferenceError: regeneratorRuntime is not defined 的错误
+              [
+                "@babel/plugin-transform-runtime",
+                {
+                  "absoluteRuntime": false,
+                  "corejs": false,
+                  "helpers": true,
+                  "regenerator": true,
+                  "version": "7.0.0-beta.0"
+                }
+              ]
+            ]
+          },
+          
+        },
       },
     ],
   },
