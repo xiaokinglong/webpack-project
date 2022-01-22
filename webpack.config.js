@@ -1,23 +1,45 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-
 module.exports = {
   entry: "./src/main.js", // 入口文件
   output: {
     path: path.resolve(__dirname, "./dist"),
-    clean: true
+    clean: true,
   },
-  devtool: 'inline-source-map',
+  devtool: "inline-source-map",
   mode: "development",
-  devServer: { // 开启本地服务
-    static: "./dist"
+  devServer: {
+    // 开启本地服务
+    static: "./dist",
   },
-  plugins:[
+  module: {
+    // 配置资源文件
+    rules: [
+      {
+        test: /\.jpg/,
+        type: "asset", // 会根据的默认规则来使用 resource 或inline
+        parser: { // 自定义规则
+          dataUrlCondition: {
+            maxSize: 4 * 1024, // 4kb
+          },
+        },
+      },
+      {
+        test: /\.png/,
+        type: "asset/resource", // 默认的规则
+      },
+      {
+        test: /\.svg/,
+        type: "asset/inline", // 转化为base64
+      },
+    ],
+  },
+  plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       filename: "index.html",
-      inject: "body"
+      inject: "body",
     }),
-  ]
-}
+  ],
+};

@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "npx webpack serve --open"
+    "start": "npx webpack serve --open",
+    "build": "npx webpack"
   },
   "dependencies": {
     "html-webpack-plugin": "^5.5.0",
