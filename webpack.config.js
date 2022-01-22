@@ -1,5 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // 压缩, 抽离css
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
   entry: "./src/main.js", // 入口文件
@@ -8,7 +10,7 @@ module.exports = {
     clean: true,
   },
   devtool: "inline-source-map",
-  mode: "development",
+  mode: "production",
   devServer: {
     // 开启本地服务
     static: "./dist",
@@ -19,7 +21,8 @@ module.exports = {
       {
         test: /\.jpg/,
         type: "asset", // 会根据的默认规则来使用 resource 或inline
-        parser: { // 自定义规则
+        parser: {
+          // 自定义规则
           dataUrlCondition: {
             maxSize: 4 * 1024, // 4kb
           },
@@ -33,13 +36,22 @@ module.exports = {
         test: /\.svg/,
         type: "asset/inline", // 转化为base64
       },
+      /** 使用loader */
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
     ],
   },
+  optimization: { minimizer: [new CssMinimizerPlugin()] },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       filename: "index.html",
       inject: "body",
+    }),
+    new MiniCssExtractPlugin({
+      filename: "styles/[contenthash].css",
     }),
   ],
 };
