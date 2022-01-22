@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npx webpack serve --open",
-    "build": "npx webpack"
+    "build": "npx webpack --env production --progress"
   },
   "dependencies": {
     "@babel/runtime": "^7.16.7",
