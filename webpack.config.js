@@ -19,6 +19,12 @@ module.exports = {
     // 配置资源文件
     rules: [
       {
+        // font
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        // use: 'file-loader'
+        type: 'asset/resource',
+      },
+      {
         test: /\.jpg/,
         type: "asset", // 会根据的默认规则来使用 resource 或inline
         parser: {

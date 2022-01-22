@@ -1,5 +1,10 @@
+@font-face {
+	src: url("../assets/font/FiraCode.ttf") format("truetype");
+	font-family: "FiraCode";
+}
 body {
 	margin: 0;
 	padding: 0;
 	background-image: url("../assets/img/WechatIMG18.png");
+	font-family: "FiraCode";
 }
